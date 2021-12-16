@@ -1,0 +1,30 @@
+name: Docker
+on:
+  push:
+    branches:
+      - master
+      - main
+  schedule:
+    - cron: '0 0 2 */1 *' # Every month
+  pull_request:
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  build-publish:
+    runs-on: ubuntu-latest
+    steps:
+    -
+      uses: actions/checkout@master
+    -
+      name: Build SGX
+      run: make build
+    -
+      name: Build native
+      run: make build_native
+    -
+      name: Push
+      if: ${{ github.event_name != 'pull_request' }}
+      run: |
+        docker login -u authexec -p ${{ secrets.DOCKER_TOKEN }}
+        make push TAG=sgx
+        make push TAG=native

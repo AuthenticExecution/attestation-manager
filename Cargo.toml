@@ -1,0 +1,23 @@
+[package]
+name = "attestation-manager"
+version = "0.1.0"
+authors = ["Gianluca Scopelliti <gianluca.scopelliti@ericsson.com>"]
+edition = "2018"
+resolver = "2"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+sgx = ["sgx_attestation/enclave"]
+debug = []
+
+[dependencies]
+anyhow = "1.0.38"
+lazy_static = "1.4.0"
+rand = "0.8.3"
+
+manager_net = { path = "manager_net", features = ["manager_structs"] }
+
+reactive_crypto = { git = "https://github.com/gianlu33/rust-sgx-libs.git" }
+reactive_net = { git = "https://github.com/gianlu33/rust-sgx-libs.git" }
+sgx_attestation = { git = "https://github.com/gianlu33/rust-sgx-libs.git", features = ["sp"] }

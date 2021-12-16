@@ -1,0 +1,14 @@
+FROM authexec/docker-sgx-tools:latest
+
+ENV MANAGER_PLATFORM=native
+
+COPY Cargo.toml build.rs ./
+COPY manager_net manager_net
+COPY src src
+
+RUN cargo build
+
+
+FROM authexec/docker-sgx-base:latest
+COPY --from=0 /usr/src/app/target/debug/attestation-manager /bin/attestation-manager
+CMD ["attestation-manager"]
