@@ -2,8 +2,8 @@ FROM authexec/docker-sgx-tools:latest
 
 ARG APP=attestation-manager
 ARG VENDOR_KEY
-ARG ELF2SGX_ARGS=--heap-size 0x2000000 --stack-size 0x200000 --threads 8
-ARG SGXSIGN_ARGS=-d --xfrm 7/0 --isvprodid 0 --isvsvn 0
+ARG ELF2SGX_ARGS="--heap-size 0x2000000 --stack-size 0x200000 --threads 8"
+ARG SGXSIGN_ARGS="-d --xfrm 7/0 --isvprodid 0 --isvsvn 0"
 
 ENV MANAGER_PLATFORM=sgx
 
