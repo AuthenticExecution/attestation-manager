@@ -14,17 +14,8 @@ lazy_static! {
 pub fn add_module(name : String, module : Module) -> Result<()> {
     let mut map = MODULES.lock().unwrap();
 
-    if map.contains_key(&name) {
-        return Err(Error::InternalError(String::from("module already in MODULES map.")).into());
-    }
-
     map.insert(name, module);
     Ok(())
-}
-
-pub fn is_module_present(name : &str) -> bool {
-    let map = MODULES.lock().unwrap();
-    map.contains_key(name)
 }
 
 // Uncomment if needed
