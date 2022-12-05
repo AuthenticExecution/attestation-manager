@@ -1,12 +1,13 @@
 use crate::handlers::*;
 use crate::error::Error;
 use crate::TLSSession;
+use std::net::TcpStream;
 use manager_net::Command;
 
 use std::io::Read;
 use anyhow::Result;
 
-pub fn process_message(mut session : TLSSession) -> Result<()> {
+pub fn process_message(mut session : TLSSession<TcpStream>) -> Result<()> {
     let mut arr : [u8; 1] = [0];
     session.read_exact(&mut arr)?;
 

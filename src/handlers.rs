@@ -1,12 +1,13 @@
 use crate::{TLSSession, debug, info};
 use manager_net::*;
 use anyhow::Result;
+use std::net::TcpStream;
 
 use crate::data::{add_module, get_module_key, clear_map};
 use crate::module::Module;
 use crate::platforms::*;
 
-pub fn handler_init(session : &mut TLSSession) -> Result<()> {
+pub fn handler_init(session : &mut TLSSession<TcpStream>) -> Result<()> {
     debug!("handler_init");
 
     // Not used for now
@@ -15,7 +16,7 @@ pub fn handler_init(session : &mut TLSSession) -> Result<()> {
     Ok(())
 }
 
-pub fn handler_init_sgx(session : &mut TLSSession) -> Result<()> {
+pub fn handler_init_sgx(session : &mut TLSSession<TcpStream>) -> Result<()> {
     debug!("handler_init_sgx");
     let data : InitSGXData = read_from_stream(session)?;
 
@@ -30,7 +31,7 @@ pub fn handler_init_sgx(session : &mut TLSSession) -> Result<()> {
     Ok(())
 }
 
-pub fn handler_attest_native(session : &mut TLSSession) -> Result<()> {
+pub fn handler_attest_native(session : &mut TLSSession<TcpStream>) -> Result<()> {
     debug!("handler_attest_native");
 
     let data : AttestationRequestNative = read_from_stream(session)?;
@@ -42,7 +43,7 @@ pub fn handler_attest_native(session : &mut TLSSession) -> Result<()> {
     Ok(())
 }
 
-pub fn handler_attest_sgx(session : &mut TLSSession) -> Result<()> {
+pub fn handler_attest_sgx(session : &mut TLSSession<TcpStream>) -> Result<()> {
     debug!("handler_attest_sgx");
 
     let data : AttestationRequestSGX = read_from_stream(session)?;
@@ -59,7 +60,7 @@ pub fn handler_attest_sgx(session : &mut TLSSession) -> Result<()> {
     Ok(())
 }
 
-pub fn handler_attest_sancus(session : &mut TLSSession) -> Result<()> {
+pub fn handler_attest_sancus(session : &mut TLSSession<TcpStream>) -> Result<()> {
     debug!("handler_attest_sancus");
 
     let data : AttestationRequestSancus = read_from_stream(session)?;
@@ -76,7 +77,7 @@ pub fn handler_attest_sancus(session : &mut TLSSession) -> Result<()> {
     Ok(())
 }
 
-pub fn handler_attest_trustzone(session : &mut TLSSession) -> Result<()> {
+pub fn handler_attest_trustzone(session : &mut TLSSession<TcpStream>) -> Result<()> {
     debug!("handler_attest_trustzone");
 
     let data : AttestationRequestTrustZone = read_from_stream(session)?;
@@ -93,7 +94,7 @@ pub fn handler_attest_trustzone(session : &mut TLSSession) -> Result<()> {
     Ok(())
 }
 
-pub fn handler_get_key(session : &mut TLSSession) -> Result<()> {
+pub fn handler_get_key(session : &mut TLSSession<TcpStream>) -> Result<()> {
     debug!("handler_get_key");
 
     let data : GetKeyRequest = read_from_stream(session)?;
@@ -106,7 +107,7 @@ pub fn handler_get_key(session : &mut TLSSession) -> Result<()> {
     Ok(())
 }
 
-pub fn handler_get_pub_key(session : &mut TLSSession) -> Result<()> {
+pub fn handler_get_pub_key(session : &mut TLSSession<TcpStream>) -> Result<()> {
     debug!("handler_get_pub_key");
 
     let _data : GetPubKeyRequest = read_from_stream(session)?;
@@ -119,7 +120,7 @@ pub fn handler_get_pub_key(session : &mut TLSSession) -> Result<()> {
     Ok(())
 }
 
-pub fn handler_reset(session : &mut TLSSession) -> Result<()> {
+pub fn handler_reset(session : &mut TLSSession<TcpStream>) -> Result<()> {
     debug!("handler_reset");
 
     let _data : ResetRequest = read_from_stream(session)?;

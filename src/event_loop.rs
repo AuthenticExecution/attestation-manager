@@ -44,7 +44,7 @@ fn handle_client(stream : TcpStream) {
     debug!("Connection closed");
 }
 
-pub fn establish_tls_server(stream : TcpStream) -> Result<Context> {
+pub fn establish_tls_server(stream : TcpStream) -> Result<Context<TcpStream>> {
     let attestation_key = ATTESTATION_KEY.lock().unwrap();
     
     let key : &[u8] = match attestation_key.as_ref() {

@@ -3,7 +3,6 @@ use std::sync::Mutex;
 use anyhow::Result;
 
 use crate::module::Module;
-use crate::error::Error;
 
 lazy_static! {
     pub static ref MODULES: Mutex<HashMap<String, Module>> = {
